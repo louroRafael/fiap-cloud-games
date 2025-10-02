@@ -1,0 +1,25 @@
+
+CRIANDO E APLICANDO MIGRATIONS (Security Identity)
+
+cd src/FCG.Infra.Security
+
+dotnet ef migrations add <NOME_MIGRATION> -c IdentityDataContext -s ../FCG.API/
+
+dotnet ef database update -c IdentityDataContext -s ../FCG.API/
+
+
+CRIANDO E APLICANDO MIGRATIONS (Data - Entidades)
+
+cd src/FCG.Infra.Data
+
+dotnet ef migrations add <NOME_MIGRATION> -c FCGDataContext -s ../FCG.API/
+
+dotnet ef database update -c FCGDataContext -s ../FCG.API/
+
+
+RELATORIO COVERAGE TESTES
+
+1º Instalar dotnet tool do report generator
+dotnet tool install -g dotnet-reportgenerator-globaltool
+
+2º Executar o script powershell "coverage-tests.ps1" na pasta scripts
