@@ -1,7 +1,7 @@
 
-# 🎮 FCG - FIAP Cloud Games (Fase 1 - Arquitetura .NET)
+# 🎮 FCG - FIAP Cloud Games (Arquitetura .NET)
 
-Projeto desenvolvido como parte da **FASE 1** da pós-graduação em Arquitetura .NET pela FIAP.
+Projeto desenvolvido como parte do **Tech Challenge** da pós-graduação em Arquitetura .NET pela FIAP.
 
 A aplicação representa uma **plataforma de jogos digitais**, permitindo que usuários possam adquirir jogos, acompanhar promoções, e gerenciar sua biblioteca. A estrutura do projeto foi pensada com foco em **boas práticas de arquitetura**, **DDD**, **segurança** e **testabilidade**.
 
