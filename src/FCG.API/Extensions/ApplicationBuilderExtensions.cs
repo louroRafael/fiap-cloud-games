@@ -32,7 +32,7 @@ namespace FCG.API.Extensions
 
         public static IApplicationBuilder UseCustomSwagger(this IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            if (env.IsDevelopment() || env.IsProduction())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
