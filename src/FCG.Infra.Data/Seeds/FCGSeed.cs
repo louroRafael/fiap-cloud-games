@@ -9,7 +9,7 @@ namespace FCG.Infra.Data.Seeds
 {
     public static class FCGSeed
     {
-        public static async Task SeedData(IUnitOfWork unitOfWork)
+        public static async Task SeedTestingData(IUnitOfWork unitOfWork)
         {
             // Usuários
             await SeedUsuario(unitOfWork, "Danilo", "danilo@fcg.com");
@@ -40,7 +40,7 @@ namespace FCG.Infra.Data.Seeds
 
             // Promoções
             await SeedPromocao(unitOfWork,
-                jogo2.Id,
+                jogo2,
                 60.99m,
                 DateTime.Now.AddDays(-1),
                 DateTime.Now.AddDays(2));
@@ -87,17 +87,21 @@ namespace FCG.Infra.Data.Seeds
         }
 
         private static async Task<Promocao> SeedPromocao(IUnitOfWork unitOfWork,
-            Guid jogoId,
+            Jogo jogo,
             decimal preco,
             DateTime dataInicio,
             DateTime dataFim)
         {
-            var promocao = new Promocao(jogoId, preco, dataInicio, dataFim);
+            var promocao = new Promocao(jogo.Id, preco, dataInicio, dataFim);
 
-            var existePromocao = await unitOfWork.PromocaoRepository.ExistePromocao(promocao.JogoId, promocao.DataInicio, promocao.DataFim);
-            if (!existePromocao)
+            var existeJogo = await unitOfWork.JogoRepository.ExisteJogo(jogo.Nome, jogo.Desenvolvedora, jogo.DataLancamento);
+            if (!existeJogo)
             {
-                await unitOfWork.PromocaoRepository.Adicionar(promocao);
+                var existePromocao = await unitOfWork.PromocaoRepository.ExistePromocao(promocao.JogoId, promocao.DataInicio, promocao.DataFim);
+                if (!existePromocao)
+                {
+                    await unitOfWork.PromocaoRepository.Adicionar(promocao);
+                }
             }
 
             return promocao;
