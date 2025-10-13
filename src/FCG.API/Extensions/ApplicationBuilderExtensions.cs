@@ -7,10 +7,7 @@ using FCG.Infra.Security.Models;
 using FCG.Infra.Security.Seeds;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Prometheus;
 
 namespace FCG.API.Extensions
 {
@@ -60,6 +57,14 @@ namespace FCG.API.Extensions
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            return app;
+        }
+
+        public static WebApplication UseCustomMetrics(this WebApplication app)
+        {
+            app.UseMetricServer();
+            app.UseHttpMetrics();
 
             return app;
         }

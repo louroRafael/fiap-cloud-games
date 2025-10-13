@@ -19,6 +19,7 @@ var app = builder.Build();
 await app.SeedDatabaseAsync();
 
 app.UseCustomSwagger();
+app.UseCustomMetrics();
 
 app.UseAuthentication();
 app.UseAuthorization();
