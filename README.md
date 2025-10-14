@@ -7,17 +7,23 @@ A aplicação representa uma **plataforma de jogos digitais**, permitindo que us
 
 ---
 
+## 🧭 Objetivo
+
+Evoluir o sistema base que foi iniciado na Fase 1, utilizando **.NET 8**, aplicando os princípios de **Domain-Driven Design (DDD)** com foco na **automação do deploy**, na **conteinerização da aplicação** e no **monitoramento da infraestrutura**.
+
+---
+
 ## 📂 Estrutura do Projeto
 
 ```
 .
-├── docs/                     # Documentação e instruções
-├── scripts/                  # Scripts de desenvolvimento (migrations, coverage, etc)
-├── src/                      # Código-fonte da aplicação
+├── docs/                     # Documentação adicional
+├── scripts/                  # Scripts úteis (migrations, cobertura, etc.)
+├── src/                      # Código-fonte principal
 │   ├── FCG.API               # Camada de apresentação (Web API)
-│   ├── FCG.Application       # Camada de aplicação (AppServices, DTOs)
-│   ├── FCG.Domain            # Camada de domínio (Entidades, regras de negócio)
-│   ├── FCG.Infra.Data        # Persistência de dados (EF Core, Repositórios)
+│   ├── FCG.Application       # Camada de aplicação (serviços e DTOs)
+│   ├── FCG.Domain            # Camada de domínio (entidades e regras de negócio)
+│   ├── FCG.Infra.Data        # Persistência de dados (EF Core e repositórios)
 │   └── FCG.Infra.Security    # Segurança e autenticação (JWT, Identity)
 └── tests/
     └── FCG.UnitTests         # Testes unitários
@@ -37,6 +43,9 @@ A aplicação representa uma **plataforma de jogos digitais**, permitindo que us
 - [Moq](https://github.com/moq/moq)
 - [Bogus (Faker)](https://github.com/bchavez/Bogus)
 - [dotnet-reportgenerator-globaltool](https://github.com/danielpalme/ReportGenerator)
+- [Docker](https://www.docker.com)
+- [Prometheus](https://prometheus.io)
+- [Grafana](https://grafana.com)
 
 ---
 
@@ -44,8 +53,8 @@ A aplicação representa uma **plataforma de jogos digitais**, permitindo que us
 
 1. **Clone o repositório**
    ```bash
-   git clone <repo-url>
-   cd nome-do-projeto
+   git clone https://github.com/louroRafael/fiap-cloud-games.git
+   cd fiap-cloud-games
    ```
 
 2. **Execute o projeto**
@@ -54,43 +63,49 @@ A aplicação representa uma **plataforma de jogos digitais**, permitindo que us
    dotnet run
    ```
 
-> ℹ️ O projeto utiliza banco de dados **InMemory** para facilitar a execução local. Caso queira executar com SQL Server, é preciso descomentar o código dentro do arquivo "**src/FCG.API/Extensions/ServiceCollectionExtensions**" do método "**AddDataContexts**" e executar o script o seguinte script da pasta `scripts`
+3. **Compilar o projeto**
+   ```bash
+   dotnet build --configuration Release
+   ```
 
-```bash
-./migrations.sh
-```
+4. **Executar a API**
+   ```bash
+   cd src/FCG.API
+   dotnet run
+   ```
+
+A API estará disponível em:
+   👉 http://localhost:8080/swagger/index.html
 
 ---
 
 
-## 🧪 Executando os Testes e Gerando Relatório de Cobertura
+## 🧪 Testes e Cobertura
 
-### 1️⃣ Instale a ferramenta de relatório (apenas uma vez)
-
+### Executar testes
 ```bash
-dotnet tool install -g dotnet-reportgenerator-globaltool
+dotnet test --configuration Release
 ```
 
-### 2️⃣ Execute o script de cobertura
+### Gerar relatório de cobertura
 
-Navegue até a pasta `scripts` e execute o script:
+1. **Instale o ReportGenerator (uma vez só)**
+   ```bash
+   dotnet tool install -g dotnet-reportgenerator-globaltool
+   ```
 
-```bash
-./coverage-tests.sh
-```
+2. **Execute o script de cobertura**
+   ```bash
+   ./scripts/coverage-tests.sh
+   ```
 
-O script irá:
-- Rodar os testes com cobertura
-- Gerar os arquivos de cobertura no diretório `coverage/`
-- Criar o relatório HTML em `coverage-report/`
-- Abrir automaticamente o `index.html` do relatório no navegador padrão
+O relatório será gerado em `coverage-report/index.html`.
 
 ---
 
 ## 📌 Notas
 
-- Este projeto foi estruturado pensando na **expansão futura** (fases seguintes da pós-graduação)
-- Já inclui **testes unitários** para regras de negócio essenciais
-- A autenticação já considera perfis com **autorização baseada em roles**
+- Estruturado para expansão futura (fases seguintes do Tech Challenge)
+- Pronto para ser containerizado e publicado no Azure Container Apps
 
 ---
