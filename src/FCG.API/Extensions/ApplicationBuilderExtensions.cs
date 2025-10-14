@@ -63,8 +63,7 @@ namespace FCG.API.Extensions
 
         public static WebApplication UseCustomMetrics(this WebApplication app)
         {
-            app.UseMetricServer();
-            app.UseHttpMetrics();
+            app.MapPrometheusScrapingEndpoint();
 
             return app;
         }
