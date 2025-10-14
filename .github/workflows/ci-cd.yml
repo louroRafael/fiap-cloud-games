@@ -60,11 +60,17 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
+      - name: Definir TAG da Imagem
+        id: vars
+        run: echo "TAG=${GITHUB_SHA::7}" >> $GITHUB_ENV  # usa os 7 primeiros chars do commit
+
       - name: Build e Push da Imagem Docker
         uses: docker/build-push-action@v6.18.0
         with:
           context: .
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/fcg-api:latest
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/fcg-api:${{ env.TAG }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/fcg-api:latest
           push: true
 
   azure-deploy:
@@ -86,4 +92,4 @@ jobs:
           az containerapp update \
           --name fcg-aca \
           --resource-group FCG \
-          --image ${{ secrets.DOCKERHUB_USERNAME }}/fcg-api:latest
+          --image ${{ secrets.DOCKERHUB_USERNAME }}/fcg-api:${{ env.TAG }}
